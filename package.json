@@ -7,7 +7,7 @@
     "start": "node server-sdk.js"
   },
   "dependencies": {
-    "@huggingface/inference": "latest"
+    "@huggingface/inference": "^2.6.4"
   },
   "engines": {
     "node": ">=18.0.0"
