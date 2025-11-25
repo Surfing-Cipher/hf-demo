@@ -4,11 +4,9 @@
   "description": "Hugging Face API Demo with Sentiment Analysis and Summarization",
   "main": "server-sdk.js",
   "scripts": {
-    "start": "node server-sdk.js"
+    "start": "node server.js"
   },
-  "dependencies": {
-    "@huggingface/inference": "^2.6.4"
-  },
+  "dependencies": {},
   "engines": {
     "node": ">=18.0.0"
   }

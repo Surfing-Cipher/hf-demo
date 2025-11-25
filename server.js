@@ -13,7 +13,7 @@ const MIME_TYPES = {
     '.jpg': 'image/jpeg',
 };
 
-const server = http.createServer((req, res) => {
+const server = http.createServer(async (req, res) => {
     console.log(`${req.method} ${req.url}`);
 
     // Handle API Proxy
@@ -25,43 +25,67 @@ const server = http.createServer((req, res) => {
         }
 
         const model = new URL(req.url, `http://${req.headers.host}`).searchParams.get('model');
-        if (!model) {
+        const token = req.headers['authorization']?.replace('Bearer ', '');
+        
+        if (!model || !token) {
             res.writeHead(400);
-            res.end('Missing model parameter');
+            res.end(JSON.stringify({ error: 'Missing model or token' }));
             return;
         }
 
-        const hfUrl = `https://router.huggingface.co/${model}`;
-        console.log(`Proxying to: ${hfUrl}`);
-        
-        // Forward headers (especially Authorization)
-        const headers = {
-            'Content-Type': 'application/json',
-            'Authorization': req.headers['authorization']
-        };
+        // Collect request body
+        let body = '';
+        req.on('data', chunk => body += chunk);
+        req.on('end', async () => {
+            try {
+                const data = JSON.parse(body);
+                
+                // Use the NEW router endpoint
+                const hfUrl = `https://api-inference.huggingface.co/models/${model}`;
+                console.log(`Proxying to: ${hfUrl}`);
+                
+                const options = {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json',
+                    }
+                };
 
-        const proxyReq = https.request(hfUrl, {
-            method: 'POST',
-            headers: headers
-        }, (proxyRes) => {
-            res.writeHead(proxyRes.statusCode, proxyRes.headers);
-            proxyRes.pipe(res);
-            
-            // Log error body for debugging
-            if (proxyRes.statusCode >= 400) {
-                let body = '';
-                proxyRes.on('data', chunk => body += chunk);
-                proxyRes.on('end', () => console.log(`API Error (${proxyRes.statusCode}): ${body}`));
+                const proxyReq = https.request(hfUrl, options, (proxyRes) => {
+                    let responseData = '';
+                    
+                    proxyRes.on('data', chunk => {
+                        responseData += chunk;
+                    });
+                    
+                    proxyRes.on('end', () => {
+                        if (proxyRes.statusCode >= 400) {
+                            console.log(`API Error (${proxyRes.statusCode}): ${responseData}`);
+                        }
+                        
+                        res.writeHead(proxyRes.statusCode, {
+                            'Content-Type': 'application/json'
+                        });
+                        res.end(responseData);
+                    });
+                });
+
+                proxyReq.on('error', (e) => {
+                    console.error('Proxy error:', e);
+                    res.writeHead(500);
+                    res.end(JSON.stringify({ error: e.message }));
+                });
+
+                proxyReq.write(JSON.stringify(data));
+                proxyReq.end();
+                
+            } catch (err) {
+                console.error('Request error:', err.message);
+                res.writeHead(500);
+                res.end(JSON.stringify({ error: err.message }));
             }
         });
-
-        proxyReq.on('error', (e) => {
-            console.error(e);
-            res.writeHead(500);
-            res.end(e.message);
-        });
-
-        req.pipe(proxyReq);
         return;
     }
 
@@ -69,9 +93,7 @@ const server = http.createServer((req, res) => {
     let filePath = '.' + req.url;
     if (filePath === './') filePath = './index.html';
     
-    // Remove query params for file lookup
     filePath = filePath.split('?')[0];
-
     const extname = path.extname(filePath);
     const contentType = MIME_TYPES[extname] || 'application/octet-stream';
 
@@ -93,5 +115,5 @@ const server = http.createServer((req, res) => {
 
 server.listen(PORT, () => {
     console.log(`Server running at http://localhost:${PORT}/`);
-    console.log(`Proxy endpoint ready at http://localhost:${PORT}/api/proxy`);
+    console.log(`Direct API proxy (no SDK dependency)`);
 });
