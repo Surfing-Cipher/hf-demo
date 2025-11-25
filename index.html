@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hugging Face AI Demo</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="background-blobs">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+    </div>
+
+    <div class="app-container">
+        <header>
+            <h1>AI Nexus</h1>
+            <p>Powered by Hugging Face</p>
+            <div class="api-key-container">
+                <input type="password" id="api-token" placeholder="Paste HF Access Token Here">
+            </div>
+        </header>
+
+        <nav class="tabs">
+            <button class="tab-btn active" data-tab="sentiment">Sentiment Analysis</button>
+            <button class="tab-btn" data-tab="summarizer">Summarization</button>
+        </nav>
+
+        <main>
+            <!-- Sentiment Analysis Section -->
+            <section id="sentiment" class="tab-content active">
+                <div class="input-group">
+                    <textarea id="sentiment-input" placeholder="Enter text to analyze sentiment... e.g., 'I absolutely love this product! It exceeded all my expectations.'"></textarea>
+                    <button id="analyze-btn" class="primary-btn">
+                        <span class="btn-text">Analyze Sentiment</span>
+                        <div class="loader hidden"></div>
+                    </button>
+                </div>
+                <div class="result-area" id="sentiment-result">
+                    <div class="placeholder-text">Sentiment analysis will appear here</div>
+                </div>
+            </section>
+
+            <!-- Summarization Section -->
+            <section id="summarizer" class="tab-content">
+                <div class="input-group">
+                    <textarea id="summary-input" placeholder="Paste a long text here to summarize..."></textarea>
+                    <button id="summarize-btn" class="primary-btn">
+                        <span class="btn-text">Summarize Text</span>
+                        <div class="loader hidden"></div>
+                    </button>
+                </div>
+                <div class="result-area" id="summary-result">
+                    <div class="placeholder-text">Summary will appear here</div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
