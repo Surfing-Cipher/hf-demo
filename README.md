@@ -50,10 +50,10 @@ A modern web application showcasing **Sentiment Analysis** and **Text Summarizat
 
 3. **Start the server**
    ```bash
-   npm start
+   node server-sdk.js
    ```
 
-4. **Open in browser**
+5. **Open in browser**
    - Navigate to `http://localhost:3000`
    - Enter your Hugging Face API token
    - Start testing!
