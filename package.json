@@ -4,7 +4,7 @@
   "description": "Hugging Face API Demo with Sentiment Analysis and Summarization",
   "main": "server-sdk.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "node server-sdk.js"
   },
   "engines": {
     "node": ">=18.0.0"
