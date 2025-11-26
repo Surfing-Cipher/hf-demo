@@ -1,139 +1,174 @@
-# Hugging Face API Demo 🤖
+# AI Nexus - Hugging Face API Demo 🤖
 
-A modern web application showcasing **Sentiment Analysis** and **Text Summarization** using Hugging Face's Inference API.
+A modern web application demonstrating **Sentiment Analysis** and **Text Summarization** using Hugging Face's AI models.
 
-![AI Nexus](https://img.shields.io/badge/Powered%20by-Hugging%20Face-yellow)
-![Node.js](https://img.shields.io/badge/Node.js-18%2B-green)
-![License](https://img.shields.io/badge/License-MIT-blue)
+## 🌟 Live Demo
 
-## 🌟 Features
+**🔗 [Live Demo on Railway](YOUR_RAILWAY_URL_HERE)**
 
-### 1. Sentiment Analysis
-- Analyzes text to determine if it's **positive** or **negative**
-- Uses `distilbert-base-uncased-finetuned-sst-2-english` model
-- Returns confidence score with visual feedback (emoji + color-coded)
+![Positive Sentiment](/C:/Users/user/.gemini/antigravity/brain/a8f6e577-bbe4-49a0-8cee-c82b1a509e3b/uploaded_image_0_1764157574128.png)
 
-### 2. Text Summarization
-- Condenses long paragraphs into concise summaries
-- Uses Facebook's `bart-large-cnn` model
-- Maintains key information while reducing length
+## ✨ Features
 
-## 🚀 Live Demo
+### 1. **Sentiment Analysis** 😊😞
+Analyzes text to determine positive or negative sentiment with confidence scores.
 
-**[View Live Demo](https://your-railway-url-here.up.railway.app)** *(Replace with your actual Railway URL)*
+- **Model**: `distilbert-base-uncased-finetuned-sst-2-english`
+- **Visual Feedback**: Emoji + color-coded results
+- **Real-time**: Instant analysis with loading states
+
+**Examples:**
+- "I love this" → 😊 POSITIVE (100.0%)
+- "terrible product" → 😞 NEGATIVE (98.0%)
+
+![Negative Sentiment](/C:/Users/user/.gemini/antigravity/brain/a8f6e577-bbe4-49a0-8cee-c82b1a509e3b/uploaded_image_1_1764157574128.png)
+
+### 2. **Text Summarization** 📝
+Condenses long articles into concise summaries while preserving key information.
+
+- **Model**: `facebook/bart-large-cnn`
+- **Smart**: Configurable summary length
+- **Accurate**: Maintains context and meaning
+
+## 🎨 Design
+
+- **Glassmorphism UI** with backdrop blur effects
+- **Animated Background** with floating gradient blobs
+- **Responsive Design** works on all devices
+- **Premium Feel** with smooth transitions
+
+## 🚀 Quick Start
+
+### Prerequisites
+- Node.js v18 or higher
+- Hugging Face API Token ([Get one free](https://huggingface.co/settings/tokens))
+
+### Local Setup
+
+```bash
+# Clone the repository
+git clone https://github.com/Surfing-Cipher/hf-demo.git
+cd hf-demo
+
+# Install dependencies
+npm install
+
+# Start the server
+npm start
+
+# Open in browser
+http://localhost:3000
+```
+
+### Using the App
+
+1. **Enter your Hugging Face API Token** in the top input field
+2. **Choose a feature** from the tabs (Sentiment Analysis or Summarization)
+3. **Enter your text** and click the button
+4. **View results** with beautiful visual feedback
 
 ## 🛠️ Tech Stack
 
-- **Frontend**: HTML, CSS (Vanilla with Glassmorphism), JavaScript
-- **Backend**: Node.js with Express-like HTTP server
-- **API**: Hugging Face Inference API via `@huggingface/inference` SDK
-- **Deployment**: Railway (Free Tier)
-
-## 📋 Prerequisites
-
-- [Node.js](https://nodejs.org/) v18 or higher
-- [Hugging Face Account](https://huggingface.co/join) (Free)
-- Hugging Face API Token ([Get it here](https://huggingface.co/settings/tokens))
-
-## 🏃‍♂️ Local Development
-
-1. **Clone the repository**
-   ```bash
-   git clone https://github.com/YOUR_USERNAME/hf-demo.git
-   cd hf-demo
-   ```
-
-2. **Install dependencies**
-   ```bash
-   npm install
-   ```
-
-3. **Start the server**
-   ```bash
-   node server-sdk.js
-   ```
-
-5. **Open in browser**
-   - Navigate to `http://localhost:3000`
-   - Enter your Hugging Face API token
-   - Start testing!
-
-## 🎯 Usage
-
-### Getting Your API Token
-1. Go to [Hugging Face Settings](https://huggingface.co/settings/tokens)
-2. Click **"Create new token"**
-3. Select **"Read"** permissions
-4. Copy the token (starts with `hf_...`)
-
-### Testing Sentiment Analysis
-Try these examples:
-- **Positive**: *"I absolutely love this product! It exceeded all my expectations."*
-- **Negative**: *"This is the worst experience I've ever had."*
-
-### Testing Summarization
-Paste any long article or paragraph to get a concise summary.
+| Component | Technology |
+|-----------|-----------|
+| **Frontend** | HTML, CSS (Glassmorphism), Vanilla JavaScript |
+| **Backend** | Node.js (HTTP server) |
+| **AI/ML** | Hugging Face Inference API v4.13.4 |
+| **Deployment** | Railway |
+| **Models** | DistilBERT (Sentiment), BART-Large (Summarization) |
 
 ## 📁 Project Structure
 
 ```
 hf-demo/
-├── index.html          # Main HTML structure
-├── style.css           # Glassmorphism UI styles
-├── app.js              # Frontend JavaScript
-├── server-sdk.js       # Node.js proxy server
-├── package.json        # Dependencies & scripts
-└── README.md           # This file
+├── index.html           # Main UI
+├── style.css            # Glassmorphism design
+├── app.js               # Frontend logic + fallback mode
+├── server-sdk.js        # Node.js proxy server
+├── package.json         # Dependencies
+└── README.md            # This file
 ```
 
-## 🌐 Deployment
+## 🔧 How It Works
 
-This app is deployed on [Railway](https://railway.app). To deploy your own:
+```
+User Input → Browser → Node.js Server → Hugging Face API → AI Model (GPU) → Results
+```
 
-1. Push to GitHub
-2. Connect repository to Railway
-3. Railway auto-detects Node.js and deploys
-4. Get your public URL from Railway dashboard
+The Node.js proxy server handles:
+- CORS restrictions
+- API token security
+- Error handling with fallback mode
 
-## 🔧 API Models Used
+## 🎯 Demo Fallback Mode
 
-| Feature | Model | Provider |
-|---------|-------|----------|
-| Sentiment Analysis | `distilbert-base-uncased-finetuned-sst-2-english` | Hugging Face |
-| Text Summarization | `facebook/bart-large-cnn` | Meta AI |
+The app includes a **smart fallback system** that:
+- ✅ Automatically detects API failures
+- ✅ Switches to simulated responses
+- ✅ Ensures demos never fail
+- ✅ Simulates realistic delays
 
-## 🎨 Design Features
+This guarantees reliable demonstrations even during API outages.
 
-- **Glassmorphism UI** with backdrop blur effects
-- **Animated background blobs** with smooth floating animations
-- **Color-coded sentiment** results (Green = Positive, Red = Negative)
-- **Responsive design** works on all devices
-- **Loading states** with animated spinners
+## 🚢 Deployment
 
-## ⚠️ Known Limitations
+### Railway (Recommended)
 
-- **Free Tier Limits**: Hugging Face free tier has rate limits
-- **Cold Starts**: Railway free tier may sleep after inactivity (~30s wake time)
-- **Image Generation**: Not available on free tier (switched to Sentiment Analysis)
+1. **Push to GitHub**
+   ```bash
+   git add .
+   git commit -m "Ready for deployment"
+   git push
+   ```
 
-## 🤝 Contributing
+2. **Deploy to Railway**
+   - Go to [Railway.app](https://railway.app)
+   - Connect your GitHub repository
+   - Railway auto-deploys on every push
 
-Feel free to fork this project and submit pull requests!
+3. **Done!** Get your public URL and share
+
+## 🔑 Environment Variables
+
+No environment variables needed! The API token is entered by users in the browser for security.
+
+## 📊 Example Use Cases
+
+### Sentiment Analysis
+- **Social Media Monitoring**: Track brand sentiment
+- **Customer Feedback**: Analyze reviews automatically
+- **Market Research**: Understand public opinion
+
+### Text Summarization
+- **News Aggregation**: Summarize articles
+- **Research**: Condense academic papers
+- **Meeting Notes**: Generate key takeaways
+
+## 🐛 Troubleshooting
+
+| Issue | Solution |
+|-------|----------|
+| **Server won't start** | Make sure you're in `hf-demo` directory |
+| **Port 3000 in use** | Kill the process or change port in `server-sdk.js` |
+| **API errors** | Check your HF token has "Read" permissions |
+| **Fallback mode activating** | Your token may have hit rate limits |
 
 ## 📝 License
 
-MIT License - feel free to use this for learning and presentations.
+MIT License - feel free to use for learning and presentations!
 
-## 🙏 Acknowledgments
+## 👨‍💻 Author
 
-- [Hugging Face](https://huggingface.co) for the amazing API
-- [Railway](https://railway.app) for free hosting
-- AI/ML community for open-source models
+Created for a Hugging Face API demonstration project.
 
-## 📧 Contact
-
-Created for a lab presentation - Thursday Demo
+**GitHub**: [Surfing-Cipher](https://github.com/Surfing-Cipher)
 
 ---
 
-**⭐ If you found this helpful, consider starring the repo!**
+**⭐ If this helped you, consider starring the repo!**
+
+## 🙏 Acknowledgments
+
+- [Hugging Face](https://huggingface.co) for amazing AI models
+- [Railway](https://railway.app) for free hosting
+- Open-source AI/ML community
